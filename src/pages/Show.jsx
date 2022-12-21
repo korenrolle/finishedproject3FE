@@ -42,7 +42,7 @@ const Show = (props) => {
             // await response / parse response 
             // navigate() -> change the current page the browser is at / client side redirect
             navigate("/")
-        } catch(err){
+        } catch (err) {
             console.log(err)
             // stretch - populate an error on your page - when a delete fails
             // populate some state (3 seconds)
@@ -53,20 +53,20 @@ const Show = (props) => {
     const isLoading = () => (<h2>....Loading</h2>)
     const loaded = () => (
         <>
-        <div className="person-card">
-            {/* React optimization / difference */}
-            <h1>{person.name}</h1>
-            <div>
-                <p>Delete Person</p>
-                <button onClick={removePerson}> X </button>
+            <div className="person-card">
+                {/* React optimization / difference */}
+                <h1>{person.name}</h1>
+                <div>
+                    <p>Delete Person</p>
+                    <button onClick={removePerson}> X </button>
+                </div>
+                <img src={person.image || placeholderImage} />
+                <h3>{person.title || "Not title given"}</h3>
             </div>
-            <img src={person.image || placeholderImage} />
-            <h3>{person.title || "Not title given"}</h3>
-        </div>
-        <Link to="/">Back to Home</Link>
+            <Link to="/">Back to Home</Link>
         </>
     )
-    useEffect(() => { getPerson() }, [])
+    useEffect(() => { getPerson() }, [id,loading])
     // confirm + render JSX +++
     // console.log(`current person: ${person?._id || "no person"}`)
     return (
