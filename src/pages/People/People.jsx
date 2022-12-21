@@ -1,5 +1,6 @@
 import './People.css'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const People = (props) => {
     // define our state variable - []
@@ -34,7 +35,7 @@ const People = (props) => {
 
     const handleChange = (e) => {
         // console.log(newForm)
-        const userInput = {...newForm}
+        const userInput = { ...newForm }
         userInput[e.target.name] = e.target.value
         setNewForm(userInput)
     }
@@ -43,16 +44,16 @@ const People = (props) => {
         // 0. prevent default (event object method)
         e.preventDefault()
         // 1. capturing our local state
-        const currentState = {...newForm}
+        const currentState = { ...newForm }
         // check any fields for property data types / truthy value (function call - stretch)
-        try{
+        try {
             const requestOptions = {
-                method: "POST", 
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(currentState)
-            } 
+            }
             // 2. specify request method , headers, Content-Type
             // 3. make fetch to BE - sending data (requestOptions)
 
@@ -71,22 +72,24 @@ const People = (props) => {
                 title: "",
             })
 
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
+
     const loaded = () => {
         return (<>
-            
             <section className="people-list">
                 {people?.map((person) => {
                     return (
-                        <div key={person._id}>
-                            {/* React optimization / difference */}
-                            <h1>{person.name}</h1>
-                            <img src={person.image} />
-                            <h3>{person.title}</h3>
-                        </div>
+                        <Link key={person._id} to={`/people/${person._id}`}>
+                            <div className="person-card">
+                                {/* React optimization / difference */}
+                                <h1>{person.name}</h1>
+                                <img src={person.image} />
+                                <h3>{person.title}</h3>
+                            </div>
+                        </Link>
                     )
                 })
                 }
@@ -121,45 +124,45 @@ const People = (props) => {
                 <h2>Create a new person</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                    <label htmlFor='name'>
-                        Name
-                        <input 
-                            type="text" 
-                            id="name"
-                            name="name" 
-                            placeholder="enter a person's name" 
-                            value={newForm.name}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    </div>
-                   <div>
-                    <label htmlFor='image'>
-                        Image
-                        <input 
-                            type="text" 
-                            id="image"
-                            name="image" 
-                            placeholder="enter a person's image" 
-                            value={newForm.image}
-                            onChange={handleChange}
-                        />
-                    </label>
+                        <label htmlFor='name'>
+                            Name
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="enter a person's name"
+                                value={newForm.name}
+                                onChange={handleChange}
+                            />
+                        </label>
                     </div>
                     <div>
-                    <label htmlFor='title'>
-                        Title
-                        <input 
-                            type="text" 
-                            id="title"
-                            name="title" 
-                            placeholder="enter a person's title" 
-                            value={newForm.title}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <br/>
-                    <input type="submit" value="Create a new person" />
+                        <label htmlFor='image'>
+                            Image
+                            <input
+                                type="text"
+                                id="image"
+                                name="image"
+                                placeholder="enter a person's image"
+                                value={newForm.image}
+                                onChange={handleChange}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label htmlFor='title'>
+                            Title
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                placeholder="enter a person's title"
+                                value={newForm.title}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <br />
+                        <input type="submit" value="Create a new person" />
                     </div>
                 </form>
             </section>
