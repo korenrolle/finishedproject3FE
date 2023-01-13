@@ -1,49 +1,54 @@
+import './Post.css'
 import { useState, useEffect } from 'react'
-import { Link, useParams, navigate, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const placeholderImage = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-
-const People = (props) => {
+const Post = (props) => {
     // define our state variable - []
     // react state
-    const [person, setPerson] = useState([])
-    const [editForm, setEditForm] = useState({
+    const [post, setPost] = useState([])
+    const [newForm, setNewForm] = useState({
         name: "",
         image: "",
         title: "",
     })
+    // fetch endpoint
+    const BASE_URL = "http://localhost:4000/post"
 
-    const { id } = useParams()
-    const BASE_URL = `http://localhost:4000/people/${id}`
-    const navigate = useNavigate()
+    // create some local state for tracking post input (user) ++
+    // link this state to a controlled form (post) ++
+    // handlers (change ++ / submit )
+    // submit event will make a post request from our current comp.
 
-    const getPerson = async () => {
+    const getPost = async () => {
         try {
             const response = await fetch(BASE_URL)
-            const foundPerson = await response.json()
-            setPerson(foundPerson)
-            setEditForm(foundPerson)
+            // fetch grabs the data from API - (mongo)
+            const allPost = await response.json()
+            // assuming no errors - translate to JS 
+            // console.log(allPost)
+            setPost(allPost)
+            // store that data (from api) in react state
         } catch (err) {
             console.log(err)
         }
     }
 
     const handleChange = (e) => {
-        // console.log(editForm)
-        const userInput = { ...editForm }
+        // console.log(newForm)
+        const userInput = { ...newForm }
         userInput[e.target.name] = e.target.value
-        setEditForm(userInput)
+        setNewForm(userInput)
     }
 
     const handleSubmit = async (e) => {
         // 0. prevent default (event object method)
         e.preventDefault()
         // 1. capturing our local state
-        const currentState = { ...editForm }
+        const currentState = { ...newForm }
         // check any fields for property data types / truthy value (function call - stretch)
         try {
             const requestOptions = {
-                method: "PUT",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -56,10 +61,17 @@ const People = (props) => {
             const response = await fetch(BASE_URL, requestOptions)
             // 4. check our response - 
             // 5. parse the data from the response into JS (from JSON) 
-            const updatedPerson = await response.json()
-            console.log(updatedPerson)
+            const createdSinglePost = await response.json()
+            console.log(createdSinglePost)
             // update local state with response (json from be)
-            navigate(`/people/${id}`)
+            setPost([...post, createdSinglePost])
+            // reset newForm state so that our form empties out
+            setNewForm({
+                name: "",
+                image: "",
+                title: "",
+            })
+
         } catch (err) {
             console.log(err)
         }
@@ -67,22 +79,27 @@ const People = (props) => {
 
     const loaded = () => {
         return (<>
-            <section>
-                <div className="person-card">
-                    {/* React optimization / difference */}
-                    <h1>{person.name}</h1>
-                    <img src={person.image || placeholderImage} />
-                    <h3>{person.title || "Not title given"}</h3>
-                </div>
-                <Link to={`/people/${id}`}>Back to {person.name}</Link>
+            <section className="post-list">
+                {post?.map((singlePost) => {
+                    return (
+                        <Link key={singlePost._id} to={`/post/${singlePost._id}`}>
+                            <div className="singlePost-card">
+                                {/* React optimization / difference */}
+                                <h1>{singlePost.name}</h1>
+                                <img src={singlePost.image} />
+                                <h3>{singlePost.title}</h3>
+                            </div>
+                        </Link>
+                    )
+                })
+                }
             </section>
-
         </>
         )
     }
 
     const loading = () => (
-        <section className="people-list">
+        <section className="post-list">
             <h1>
                 Loading...
                 <span>
@@ -97,14 +114,14 @@ const People = (props) => {
     );
 
     useEffect(() => {
-        getPerson()
+        getPost()
     }, [])
     // useEffect takes two arguments -> runs function upon component mount
     // react mount -> 
     return (
         <div>
             <section>
-                <h2>Create a new person</h2>
+                <h2>Create a new singlePost</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor='name'>
@@ -113,8 +130,8 @@ const People = (props) => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                placeholder="enter a person's name"
-                                value={editForm.name}
+                                placeholder="enter a singlePost's name"
+                                value={newForm.name}
                                 onChange={handleChange}
                             />
                         </label>
@@ -126,8 +143,8 @@ const People = (props) => {
                                 type="text"
                                 id="image"
                                 name="image"
-                                placeholder="enter a person's image"
-                                value={editForm.image}
+                                placeholder="enter a singlePost's image"
+                                value={newForm.image}
                                 onChange={handleChange}
                             />
                         </label>
@@ -139,20 +156,20 @@ const People = (props) => {
                                 type="text"
                                 id="title"
                                 name="title"
-                                placeholder="enter a person's title"
-                                value={editForm.title}
+                                placeholder="enter a singlePost's title"
+                                value={newForm.title}
                                 onChange={handleChange}
                             />
                         </label>
                         <br />
-                        <input type="submit" value="Edit a person" />
+                        <input type="submit" value="Create a new singlePost" />
                     </div>
                 </form>
             </section>
-            {person  ? loaded() : loading()}
+            {post && post.length ? loaded() : loading()}
         </div >
     )
 
 }
 
-export default People
+export default Post

@@ -1,7 +1,7 @@
-.people-list{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 60px;
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
 }
 
 .spinner {
@@ -9,12 +9,12 @@
   animation: loading infinite 3s linear;
 }
 
-.people-list a{
-    text-decoration: none;
-    color: #333;
+.post-list a {
+  text-decoration: none;
+  color: #333;
 }
 
-.person-card {
+.singlePost-card {
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -23,17 +23,14 @@
   border-radius: 10px;
 }
 /* 
-.person-card img{
+.singlePost-card img{
 } */
 
-
-
-@keyframes loading{
-  from{
+@keyframes loading {
+  from {
     transform: rotateZ(0deg);
   }
-  to{
+  to {
     transform: rotateZ(360deg);
   }
 }
-

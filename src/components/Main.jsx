@@ -1,15 +1,15 @@
 import {Routes, Route} from 'react-router-dom'
-import People from '../pages/People/People'
+import Post from '../pages/Post/Post'
 import Show from '../pages/Show'
-import PersonEdit from '../pages/PersonEdit'
+import singlePostEdit from '../pages/singlePostEdit'
 
 const Main = (props) => {
     return (
         <main>
             <Routes>
-                <Route path="/" element={<People/>}/>
-                <Route path="/people/:id" element={<Show />}/>
-                <Route path="/people/:id/edit" element={<PersonEdit />}/>
+                <Route path="/" element={<Post/>}/>
+                <Route path="/post/:id" element={<Show />}/>
+                <Route path="/post/:id/edit" element={<singlePostEdit />}/>
             </Routes>
         </main>
     )

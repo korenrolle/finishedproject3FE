@@ -1,1 +1,1 @@
-# People App
+# Post App
