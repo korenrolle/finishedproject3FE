@@ -15,6 +15,7 @@ const CommentShow = (props) => {
     // define some local variables
     const URL = `http://localhost:4000/comment/${id}`
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getSingleComment = async () => {
         try {
             const response = await fetch(URL)
@@ -68,7 +69,7 @@ const CommentShow = (props) => {
             <Link to="/"><h1>Back to Home</h1></Link>
         </>
     )
-    useEffect(() => { getSingleComment() }, [id,loading])
+    useEffect(() => { getSingleComment() }, [getSingleComment, id, loading])
     // confirm + render JSX +++
     // console.log(`current singleComment: ${singleComment?._id || "no singleComment"}`)
     return (
