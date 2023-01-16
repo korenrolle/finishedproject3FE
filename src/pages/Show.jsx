@@ -15,6 +15,7 @@ const Show = (props) => {
     // define some local variables
     const URL = `http://localhost:4000/post/${id}`
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getSinglePost = async () => {
         try {
             const response = await fetch(URL)
@@ -68,7 +69,7 @@ const Show = (props) => {
             <Link to="/"><h1>Back to Home</h1></Link>
         </>
     )
-    useEffect(() => { getSinglePost() }, [id,loading])
+    useEffect(() => { getSinglePost() }, [getSinglePost, id, loading])
     // confirm + render JSX +++
     // console.log(`current singlePost: ${singlePost?._id || "no singlePost"}`)
     return (

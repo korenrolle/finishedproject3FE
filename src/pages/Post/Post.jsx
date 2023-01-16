@@ -86,7 +86,7 @@ const Post = (props) => {
                             <div className="singlePost-card">
                                 {/* React optimization / difference */}
                                 <h1>{singlePost.name}</h1>
-                                <img src={singlePost.image} />
+                                <img alt=""src={singlePost.image} />
                                 <h3>{singlePost.title}</h3>
                             </div>
                         </Link>
@@ -104,7 +104,7 @@ const Post = (props) => {
                 Loading...
                 <span>
                     {" "}
-                    <img
+                    <img alt=""
                         className="spinner"
                         src="https://freesvg.org/img/1544764567.png"
                     />

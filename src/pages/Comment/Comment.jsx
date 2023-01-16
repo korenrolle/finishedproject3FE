@@ -101,7 +101,7 @@ const Comment = (props) => {
             <h1>
                 Loading...
                 <span>
-                    <img
+                    <img alt=""
                         className="spinner"
                         src="https://freesvg.org/img/1544764567.png"
                     />
