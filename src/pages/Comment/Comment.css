@@ -1,0 +1,27 @@
+.card-footer .btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.card-footer .btn i {
+  vertical-align: middle;
+}
+
+.card-footer .btn.btn-primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.card-footer .btn.btn-secondary {
+  background-color: #2196f3;
+  color: white;
+}
+
+.card-footer .btn.btn-success {
+  background-color: #f44336;
+  color: white;
+}

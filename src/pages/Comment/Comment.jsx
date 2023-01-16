@@ -1,18 +1,17 @@
-import './Post.css'
+import './Comment.css'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-const Post = (props) => {
+const Comment = (props) => {
     // define our state variable - []
     // react state
-    const [post, setPost] = useState([])
+    const [comment, setComment] = useState([])
     const [newForm, setNewForm] = useState({
         name: "",
-        image: "",
-        title: "",
+        comment: "",
     })
     // fetch endpoint
-    const BASE_URL = "http://localhost:4000/post"
+    const BASE_URL = "http://localhost:4000/comment"
 
     // create some local state for tracking post input (user) ++
     // link this state to a controlled form (post) ++
@@ -23,10 +22,10 @@ const Post = (props) => {
         try {
             const response = await fetch(BASE_URL)
             // fetch grabs the data from API - (mongo)
-            const allPost = await response.json()
+            const allComment = await response.json()
             // assuming no errors - translate to JS 
             // console.log(allPost)
-            setPost(allPost)
+            setComment(allComment)
             // store that data (from api) in react state
         } catch (err) {
             console.log(err)
@@ -61,15 +60,14 @@ const Post = (props) => {
             const response = await fetch(BASE_URL, requestOptions)
             // 4. check our response - 
             // 5. parse the data from the response into JS (from JSON) 
-            const createdSinglePost = await response.json()
-            console.log(createdSinglePost)
+            const createdSingleComment = await response.json()
+            console.log(createdSingleComment)
             // update local state with response (json from be)
-            setPost([...post, createdSinglePost])
+            setComment([...comment, createdSingleComment])
             // reset newForm state so that our form empties out
             setNewForm({
                 name: "",
-                image: "",
-                title: "",
+                comment: "",
             })
 
         } catch (err) {
@@ -79,15 +77,15 @@ const Post = (props) => {
 
     const loaded = () => {
         return (<>
+        <h1>Comments</h1>
             <section className="post-list">
-                {post?.map((singlePost) => {
+                {comment?.map((singleComment) => {
                     return (
-                        <Link key={singlePost._id} to={`/post/${singlePost._id}`}>
+                        <Link key={singleComment._id} to={`/comment/${singleComment._id}`}>
                             <div className="singlePost-card">
                                 {/* React optimization / difference */}
-                                <h1>{singlePost.name}</h1>
-                                <img src={singlePost.image} />
-                                <h3>{singlePost.title}</h3>
+                                <h1>{singleComment.name}</h1>
+                                <h2>{singleComment.comment}</h2>
                             </div>
                         </Link>
                     )
@@ -103,7 +101,6 @@ const Post = (props) => {
             <h1>
                 Loading...
                 <span>
-                    {" "}
                     <img
                         className="spinner"
                         src="https://freesvg.org/img/1544764567.png"
@@ -121,55 +118,41 @@ const Post = (props) => {
     return (
         <div>
             <section className='postForm'>
-                <h2>Create A New Post</h2>
+                <h2>Create a new Comment</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor='name'>
-                            Name:
+                            Name
                             <input
                                 type="text"
                                 id="name"
                                 name="name"
-                                placeholder="post name"
+                                placeholder="enter a name"
                                 value={newForm.name}
                                 onChange={handleChange}
                             />
                         </label>
                     </div>
                     <div>
-                        <label htmlFor='image'>
-                            Image:
+                        <label htmlFor='comment'>
+                            Comment
                             <input
                                 type="text"
-                                id="image"
-                                name="image"
-                                placeholder="post image"
-                                value={newForm.image}
-                                onChange={handleChange}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor='title'>
-                            Title:
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                placeholder="post title"
-                                value={newForm.title}
+                                id="comment"
+                                name="comment"
+                                placeholder="enter a comment"
+                                value={newForm.comment}
                                 onChange={handleChange}
                             />
                         </label>
                         <br />
-                        <input className='button' type="submit" value="Create a Post" />
+                        <input className='button' type="submit" value="Create a new comment" />
                     </div>
                 </form>
             </section>
-            {post && post.length ? loaded() : loading()}
+            {comment && comment.length ? loaded() : loading()}
         </div >
     )
 
 }
-
-export default Post
+export default Comment;

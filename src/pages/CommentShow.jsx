@@ -2,25 +2,25 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import Comment from './Comment/Comment'
 
-const placeholderImage = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+// const placeholderImage = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
 
-const Show = (props) => {
+const CommentShow = (props) => {
     // local state (Show)
-    const [singlePost, setSinglePost] = useState(null)
+    const [singleComment, setSingleComment] = useState(null)
     const [loading, setLoading] = useState(true)
     // access information about the current url path for browser
 
     const { id } = useParams()
     const navigate = useNavigate()
     // define some local variables
-    const URL = `http://localhost:4000/post/${id}`
+    const URL = `http://localhost:4000/comment/${id}`
 
-    const getSinglePost = async () => {
+    const getSingleComment = async () => {
         try {
             const response = await fetch(URL)
             const result = await response.json()
             console.log(result)
-            setSinglePost(result)
+            setSingleComment(result)
             setLoading(false)
         } catch (err) {
             console.log(err)
@@ -28,7 +28,7 @@ const Show = (props) => {
     }
     // make a fetch 
 
-    const removeSinglePost = async (e) => {
+    const removeSingleComment = async (e) => {
         try {
 
             // configure our delete request
@@ -36,10 +36,10 @@ const Show = (props) => {
                 method: "DELETE"
             }
             const response = await fetch(URL, options)
-            const deletedSinglePost = await response.json()
+            const deletedSingleComment = await response.json()
 
             // make a fetch (delete)
-            console.log(deletedSinglePost)
+            console.log(deletedSingleComment)
             // await response / parse response 
             // navigate() -> change the current page the browser is at / client side redirect
             navigate("/")
@@ -54,23 +54,23 @@ const Show = (props) => {
     const isLoading = () => (<h2>....Loading</h2>)
     const loaded = () => (
         <>
-            <div className="singlePostEdit-card">
+            <div className="singleComment-card">
                 {/* React optimization / difference */}
-                <h1>{singlePost.name}</h1>
+                <h1>{singleComment.name}</h1>
                 <div>
-                    <p>Delete Post</p>
-                    <button className='button' onClick={removeSinglePost}> X </button>
+                    <p>Delete singleComment</p>
+                    <button onClick={removeSingleComment}> X </button>
                 </div>
-                <img src={singlePost.image || placeholderImage} alt="avatar" />
-                <h3>{singlePost.title || "No title given"}</h3>
+                {/* <img src={singleComment.image || placeholderImage} /> */}
+                <h3>{singleComment.title || "Not title given"}</h3>
             </div>
             <Comment/>
             <Link to="/"><h1>Back to Home</h1></Link>
         </>
     )
-    useEffect(() => { getSinglePost() }, [id,loading])
+    useEffect(() => { getSingleComment() }, [id,loading])
     // confirm + render JSX +++
-    // console.log(`current singlePost: ${singlePost?._id || "no singlePost"}`)
+    // console.log(`current singleComment: ${singleComment?._id || "no singleComment"}`)
     return (
         <section className="ShowContainer">
 
@@ -79,4 +79,4 @@ const Show = (props) => {
         </section>)
 }
 
-export default Show
+export default CommentShow

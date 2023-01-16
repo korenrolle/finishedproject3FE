@@ -1,6 +1,6 @@
+import './SinglePostEdit.css'
 import { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-
 const placeholderImage = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
 
 const Post = (props) => {
@@ -73,7 +73,7 @@ const Post = (props) => {
                 <div className="singlePost-card">
                     {/* React optimization / difference */}
                     <h1>{singlePost.name}</h1>
-                    <img src={singlePost.image || placeholderImage} alt="profile"/>
+                    <img src={singlePost.image || placeholderImage} alt="profile" />
                     <h3>{singlePost.title || "Not title given"}</h3>
                 </div>
                 <Link to={`/post/${id}`}>Back to {singlePost.name}</Link>
@@ -100,58 +100,58 @@ const Post = (props) => {
 
     useEffect(() => {
         getSinglePost()
-    }, )
+    },)
     // useEffect takes two arguments -> runs function upon component mount
     // react mount -> 
     return (
         <div>
-            <section>
-                <h2>Create a new singlePost</h2>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor='name'>
-                            Name
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="enter a singlePost's name"
-                                value={editForm.name}
-                                onChange={handleChange}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor='image'>
-                            Image
-                            <input
-                                type="text"
-                                id="image"
-                                name="image"
-                                placeholder="enter a singlePost's image"
-                                value={editForm.image}
-                                onChange={handleChange}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <label htmlFor='title'>
-                            Title
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                placeholder="enter a singlePost's title"
-                                value={editForm.title}
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <br />
-                        <input type="submit" value="Edit a singlePost" />
-                    </div>
-                </form>
-            </section>
-            {singlePost  ? loaded() : loading()}
+                <section className='postForm'>
+                    <h2>Create a new singlePost</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor='name'>
+                                Name
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="enter a singlePost's name"
+                                    value={editForm.name}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                        </div>
+                        <div>
+                            <label htmlFor='image'>
+                                Image
+                                <input
+                                    type="text"
+                                    id="image"
+                                    name="image"
+                                    placeholder="enter a singlePost's image"
+                                    value={editForm.image}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                        </div>
+                        <div>
+                            <label htmlFor='title'>
+                                Title
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    placeholder="enter a singlePost's title"
+                                    value={editForm.title}
+                                    onChange={handleChange}
+                                />
+                            </label>
+                            <br />
+                            <input type="submit" value="Edit a singlePost" />
+                        </div>
+                    </form>
+                </section>
+            {singlePost ? loaded() : loading()}
         </div >
     )
 
